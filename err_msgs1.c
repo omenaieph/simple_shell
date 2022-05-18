@@ -1,9 +1,3 @@
-/*
- * File: err_msgs1.c
- * Auth: Ephraim Omenai
- *       Peter Atteh
- */
-
 #include "shell.h"
 
 char *error_env(char **args);

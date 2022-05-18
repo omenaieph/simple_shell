@@ -1,9 +1,3 @@
-/*
- * File: builtin.c
- * Auth: Ephraim Omenai
- *       Peter Atteh
- */
-
 #include "shell.h"
 int (*get_builtin(char *command))(char **args, char **front);
 int shellby_exit(char **args, char **front);

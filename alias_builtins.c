@@ -1,7 +1,7 @@
 /*
  * File: builtin.c
- * Auth: Ephraim Omenai
- *       Peter Atteh
+ * Auth: Ephraim & Peter Atteh
+ *
  */
 
 #include "shell.h"

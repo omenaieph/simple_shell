@@ -1,9 +1,3 @@
-/*
- * File: environ.c
- * Auth: Ephraim Omenai
- *       Peter Atteh
- */
-
 #include "shell.h"
 
 char **_copyenv(void);

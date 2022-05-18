@@ -1,9 +1,3 @@
-/*
- * File: errors.c
- * Auth: Ephraim Omenai
- *       Peter Atteh
- */
-
 #include "shell.h"
 
 int num_len(int num);
