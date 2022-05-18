@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
  * _strtok - tokenizes strings at delimiter
@@ -55,7 +55,7 @@ char *_strchr(char *s, char c)
 {
 	char x;
 
-	while (true)
+	while (1)
 	{
 		x = *s++;
 		if (x == c)
@@ -64,3 +64,4 @@ char *_strchr(char *s, char c)
 			return (NULL);
 	}
 }
+

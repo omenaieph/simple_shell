@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
  * _strlen - returns the length of a string
@@ -34,7 +34,7 @@ char *_strcat(char *dest, char *src)
  * _strcmp - compares two strings
  * @s1: string 1
  * @s2: string 2
- * Return: 1 if true, 0 if false
+ * Return: 1 if 1, 0 if 0
  */
 int _strcmp(char *s1, char *s2)
 {

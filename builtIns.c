@@ -1,11 +1,11 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * findBuiltIns - validates if command is builtin and executes
- * @build: input build
- * Return: true if found, false if not
+ * checkBuiltIns - validates if command is builtin and executes
+ * @init: input init
+ * Return: 1 if found, 0 if not
  */
-_Bool findBuiltIns(config *build)
+int checkBuiltIns(shellMaker *init)
 {
 	register int i = 0;
 	type_b getBuiltIns[] = {
@@ -22,45 +22,45 @@ _Bool findBuiltIns(config *build)
 
 	while (getBuiltIns[i].command)
 	{
-		if (_strcmp(build->args[0], getBuiltIns[i].command) == 0)
+		if (_strcmp(init->args[0], getBuiltIns[i].command) == 0)
 		{
-			getBuiltIns[i].func(build);
-			freeArgsAndBuffer(build);
-			return (true);
+			getBuiltIns[i].func(init);
+			freeArgsAndBuffer(init);
+			return (1);
 		}
 		i++;
 	}
-	return (false);
+	return (0);
 }
 
 /**
  * exitFunc - exits the application
- * @build: input build
+ * @init: input init
  * Return: 1 on success, 0 on failure
  */
-int exitFunc(config *build)
+int exitFunc(shellMaker *init)
 {
 	register int argCount, exitStatus;
 
-	argCount = countArgs(build->args);
+	argCount = countArgs(init->args);
 	if (argCount == 1)
 	{
-		freeMembers(build);
-		if (build->errorStatus)
-			exit(build->errorStatus);
+		freeMem(init);
+		if (init->processErrorStatus)
+			exit(init->processErrorStatus);
 		exit(EXIT_SUCCESS);
 	}
 	else if (argCount > 1)
 	{
-		exitStatus = _atoi(build->args[1]);
+		exitStatus = _atoi(init->args[1]);
 		if (exitStatus == -1)
 		{
 			errno = EILLEGAL;
-			build->errorStatus = 2;
-			errorHandler(build);
+			init->processErrorStatus = 2;
+			errorHandler(init);
 			return (0);
 		}
-		freeMembers(build);
+		freeMem(init);
 		exit(exitStatus);
 	}
 	return (1);
@@ -68,28 +68,28 @@ int exitFunc(config *build)
 
 /**
  * historyFunc - displays command history
- * @build: input build
+ * @init: input init
  * Return: 1 on success, 0 on failure
  */
-int historyFunc(config *build)
+int historyFunc(shellMaker *init)
 {
 	char *str = "Currently in development\n";
 
-	(void)build;
+	(void)init;
 	write(STDOUT_FILENO, str, _strlen(str));
 	return (1);
 }
 
 /**
  * aliasFunc - displays local aliases
- * @build: input build
+ * @init: input init
  * Return: 1 on success, 0 on failure
  */
-int aliasFunc(config *build)
+int aliasFunc(shellMaker *init)
 {
 	char *str = "Currently in development\n";
 
-	(void)build;
+	(void)init;
 	write(STDOUT_FILENO, str, _strlen(str));
 	return (1);
 }

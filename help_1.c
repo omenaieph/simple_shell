@@ -1,11 +1,11 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
  * helpFunc - retrieves instruction on how to use builtin
- * @build: input build
+ * @init: input init
  * Return: Always 1
  */
-int helpFunc(config *build)
+int helpFunc(shellMaker *init)
 {
 	type_b help_arr[] = {
 		{"exit", helpExit},
@@ -18,8 +18,8 @@ int helpFunc(config *build)
 		{"help", helpHelp},
 		{NULL, NULL}
 	};
-	register int i = 0, j = 1, argCount = countArgs(build->args);
-	_Bool foundCommand = false;
+	register int i = 0, j = 1, argCount = countArgs(init->args);
+	int foundCommand = 0;
 
 	if (argCount == 1)
 		return (displayHelpMenu());
@@ -28,20 +28,20 @@ int helpFunc(config *build)
 		i = 0;
 		while (help_arr[i].command)
 		{
-			if (_strcmp(build->args[j], help_arr[i].command) == 0)
+			if (_strcmp(init->args[j], help_arr[i].command) == 0)
 			{
-				foundCommand = true;
-				help_arr[i].func(build);
+				foundCommand = 1;
+				help_arr[i].func(init);
 				break;
 			}
 			i++;
 		}
 		j++;
 	}
-	if (foundCommand == false)
+	if (foundCommand == 0)
 	{
 		errno = ENOBUILTIN;
-		errorHandler(build);
+		errorHandler(init);
 	}
 	return (1);
 }
@@ -63,15 +63,15 @@ int displayHelpMenu(void)
 
 /**
  * helpExit - instructions on how to exit
- * @build: input build
+ * @init: input init
  * Return: Always 1
  */
-int helpExit(config *build)
+int helpExit(shellMaker *init)
 {
 	char str[82] = "exit: exit [n]\n\tExit the shell.\n\n\t";
 	char *str2 = "Exit with a status of n, or if n is omitted, 0.\n";
 
-	(void)build;
+	(void)init;
 	_strcat(str, str2);
 	write(STDOUT_FILENO, str, _strlen(str));
 	return (1);
@@ -79,28 +79,28 @@ int helpExit(config *build)
 
 /**
  * helpEnv - instructions on how to exit
- * @build: input build
+ * @init: input init
  * Return: Always 1
  */
-int helpEnv(config *build)
+int helpEnv(shellMaker *init)
 {
 	char str[] = "env: env\n\tPrint the environment.\n";
 
-	(void)build;
+	(void)init;
 	write(STDOUT_FILENO, str, _strlen(str));
 	return (1);
 }
 
 /**
  * helpHistory - instructions on how to exit
- * @build: input build
+ * @init: input init
  * Return: Always 1
  */
-int helpHistory(config *build)
+int helpHistory(shellMaker *init)
 {
 	char str[] = "history: history\n\tNot supported in this version.\n";
 
-	(void)build;
+	(void)init;
 	write(STDOUT_FILENO, str, _strlen(str));
 	return (1);
 }

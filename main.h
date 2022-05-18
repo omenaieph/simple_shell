@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <sys/wait.h>
 #include <unistd.h>
+#include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -32,32 +32,32 @@ typedef struct linkedList
 {
 	char *string;
 	struct linkedList *next;
-} linked_l;
+} l_list;
 
 /**
- * struct configurations - configuration of build settings
+ * struct initialization - shellMakeruration of init settings
  * @env: linked list of local env variables
- * @envList: array of env variables to put into execve
+ * @envArr: array of env variables to put into execve
  * @args: array of argument strings
  * @buffer: string buffer of user input
  * @path: array of $PATH locations
- * @fullPath: string of path with correct prepended $PATH
- * @shellName: name of shell (argv[0])
+ * @actualPath: string of path with correct prepended $PATH
+ * @shellName: name of shellMaker (argv[0])
  * @lineCounter: counter of lines users have entered
- * @errorStatus: error status of last child process
+ * @processErrorStatus: error status of last child process
  */
-typedef struct configurations
+typedef struct initialization
 {
-	linked_l *env;
-	char **envList;
-	char **args;
+    char **args;
+    char *shellName;
+	l_list *env;
+	char **envArr;
 	char *buffer;
 	char *path;
-	char *fullPath;
-	char *shellName;
+	char *actualPath;
 	unsigned int lineCounter;
-	int errorStatus;
-} config;
+	int processErrorStatus;
+} shellMaker;
 
 /**
  * struct builtInCommands - commands and functions associated with it
@@ -67,83 +67,83 @@ typedef struct configurations
 typedef struct builtInCommands
 {
 	char *command;
-	int (*func)(config *build);
+	int (*func)(shellMaker *init);
 } type_b;
 
 /* main */
-config *configInit(config *build);
+shellMaker *initializeSetter(shellMaker *init);
 
 /* built_ins */
-_Bool findBuiltIns(config *build);
-int exitFunc(config *build);
-int historyFunc(config *build);
-int aliasFunc(config *build);
+int checkBuiltIns(shellMaker *init);
+int exitFunc(shellMaker *init);
+int historyFunc(shellMaker *init);
+int aliasFunc(shellMaker *init);
 
 /* cd */
-int cdFunc(config *);
-_Bool cdToHome(config *build);
-_Bool cdToPrevious(config *build);
-_Bool cdToCustom(config *build);
-_Bool updateEnviron(config *build);
+int cdFunc(shellMaker *);
+int cdToHome(shellMaker *init);
+int cdToPrevious(shellMaker *init);
+int cdToCustom(shellMaker *init);
+int updateEnviron(shellMaker *init);
 
 /* cd2 */
-int updateOld(config *build);
-_Bool updateCur(config *build, int index);
+int updateOld(shellMaker *init);
+int updateCur(shellMaker *init, int index);
 
 /* env */
-int envFunc(config *build);
-int setenvFunc(config *build);
-int unsetenvFunc(config *build);
+int envFunc(shellMaker *init);
+int setenvFunc(shellMaker *init);
+int unsetenvFunc(shellMaker *init);
 int _isalpha(int c);
 
 /* help */
-int helpFunc(config *build);
+int helpFunc(shellMaker *init);
 int displayHelpMenu(void);
-int helpExit(config *build);
-int helpEnv(config *build);
-int helpHistory(config *build);
+int helpExit(shellMaker *init);
+int helpEnv(shellMaker *init);
+int helpHistory(shellMaker *init);
 
 /* help2 */
-int helpAlias(config *build);
-int helpCd(config *biuld);
-int helpSetenv(config *build);
-int helpUnsetenv(config *build);
-int helpHelp(config *build);
+int helpAlias(shellMaker *init);
+int helpCd(shellMaker *biuld);
+int helpSetenv(shellMaker *init);
+int helpUnsetenv(shellMaker *init);
+int helpHelp(shellMaker *init);
 
 /* built_in_helpers*/
 int countArgs(char **args);
 int _atoi(char *s);
 
-/* shell */
-void shell(config *build);
-void checkAndGetLine(config *build);
-void forkAndExecute(config *build);
+/* shellMaker */
+void start(shellMaker *init);
+void checkStdin(shellMaker *init);
+void forkAndExecute(shellMaker *init);
 void stripComments(char *str);
-void convertLLtoArr(config *build);
+void convertLListtoArr(shellMaker *init);
 
 /* _getenv */
 char *_getenv(char *input, char **environ);
 
 /* error_handler */
-void errorHandler(config *build);
+void errorHandler(shellMaker *init);
 unsigned int countDigits(int num);
 char *itoa(unsigned int num);
 char *getErrorMessage();
 
 /* shell_helpers */
-void insertNullByte(char *str, unsigned int index);
+void putNullByte(char *str, unsigned int index);
 void displayPrompt(void);
 void displayNewLine(void);
 void sigintHandler(int sigint);
 
 /* check_path */
-_Bool checkPath(config *);
-_Bool checkEdgeCases(config *build);
+int pathCheck(shellMaker *);
+int checkEdgeCases(shellMaker *init);
 
 /* split_string */
-_Bool splitString(config *build);
+int splitString(shellMaker *init);
 unsigned int countWords(char *s);
-_Bool isSpace(char c);
+int isSpace(char c);
 
 /* string_helpers1 */
 int _strlen(char *s);
@@ -158,30 +158,26 @@ int _strcspn(char *string, char *chars);
 char *_strchr(char *s, char c);
 
 /* llfuncs1 */
-linked_l *addNode(linked_l **head, char *str);
-linked_l *addNodeEnd(linked_l **head, char *str);
-size_t printList(const linked_l *h);
-int searchNode(linked_l *head, char *str);
-size_t list_len(linked_l *h);
+l_list *addNode(l_list **head, char *str);
+l_list *addNodeEnd(l_list **head, char *str);
+size_t printList(const l_list *h);
+int searchNode(l_list *head, char *str);
+size_t l_list_len(l_list *h);
 
 /* llfuncs2 */
-int deleteNodeAtIndex(linked_l **head, unsigned int index);
-linked_l *generateLinkedList(char **array);
-linked_l *addNodeAtIndex(linked_l **head, int index, char *str);
-char *getNodeAtIndex(linked_l *head, unsigned int index);
-
-/* welcome */
-void welcome_screen_1(void);
-void welcome_screen_2(void);
+int deleteNodeAtIndex(l_list **head, unsigned int index);
+l_list *convertToLL(char **array);
+l_list *addNodeAtIndex(l_list **head, int index, char *str);
+char *getNodeAtIndex(l_list *head, unsigned int index);
 
 /* _realloc */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_memcpy(char *dest, char *src, unsigned int n);
 
 /* free */
-void freeMembers(config *build);
-void freeArgsAndBuffer(config *build);
+void freeMem(shellMaker *init);
+void freeArgsAndBuffer(shellMaker *init);
 void freeArgs(char **args);
-void freeList(linked_l *head);
+void freeList(l_list *head);
 
 #endif

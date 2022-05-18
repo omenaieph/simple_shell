@@ -1,73 +1,74 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * checkPath - searches $PATH for directory of command
- * @build: input build
+ * checkEdgeCases - helper func for check path to check edge cases
+ * @init: input init
+ * Return: 1 if found, 0 if not
  */
-_Bool checkPath(config *build)
+int checkEdgeCases(shellMaker *init)
+{
+	char *copy;
+	struct stat st;
+
+	copy = _strdup(init->path);
+	if (!copy)
+	{
+		init->actualPath = init->args[0];
+		free(copy);
+		return (1);
+	}
+	if (*copy == ':' && stat(init->args[0], &st) == 0)
+	{
+		init->actualPath = init->args[0];
+		free(copy);
+		return (1);
+	}
+	free(copy);
+	return (0);
+}
+/**
+ * pathCheck - searches $PATH for directory of command
+ * @init: initial
+ * Return: 1 if found, 0 if not
+ */
+
+int pathCheck(shellMaker *init)
 {
 	register int len;
 	static char buffer[BUFSIZE];
 	struct stat st;
 	char *tok, *copy, *delim = ":", *tmp;
-	_Bool inLoop = false;
+	int inLoop = 0;
 
-	if (checkEdgeCases(build))
-		return (true);
-	copy = _strdup(build->path);
+	if (checkEdgeCases(init))
+		return (1);
+	copy = _strdup(init->path);
 	tok = _strtok(copy, delim);
 	while (tok)
 	{
 		tmp = inLoop ? tok - 2 : tok;
-		if (*tmp == 0 && stat(build->args[0], &st) == 0)
+		if (*tmp == 0 && stat(init->args[0], &st) == 0)
 		{
-			build->fullPath = build->args[0];
+			init->actualPath = init->args[0];
 			free(copy);
-			return (true);
+			return (1);
 		}
-		len = _strlen(tok) + _strlen(build->args[0]) + 2;
+		len = _strlen(tok) + _strlen(init->args[0]) + 2;
 		_strcat(buffer, tok);
 		_strcat(buffer, "/");
-		_strcat(buffer, build->args[0]);
-		insertNullByte(buffer, len - 1);
+		_strcat(buffer, init->args[0]);
+		putNullByte(buffer, len - 1);
 		if (stat(buffer, &st) == 0)
 		{
 			free(copy);
-			build->fullPath = buffer;
-			return (true);
+			init->actualPath = buffer;
+			return (1);
 		}
-		insertNullByte(buffer, 0);
+		putNullByte(buffer, 0);
 		tok = _strtok(NULL, delim);
-		inLoop = true;
+		inLoop = 1;
 	}
-	build->fullPath = build->args[0];
+	init->actualPath = init->args[0];
 	free(copy);
-	return (false);
-}
-
-/**
- * checkEdgeCases - helper func for check path to check edge cases
- * @build: input build
- * Return: true if found, false if not
- */
-_Bool checkEdgeCases(config *build)
-{
-	char *copy;
-	struct stat st;
-
-	copy = _strdup(build->path);
-	if (!copy)
-	{
-		build->fullPath = build->args[0];
-		free(copy);
-		return (true);
-	}
-	if (*copy == ':' && stat(build->args[0], &st) == 0)
-	{
-		build->fullPath = build->args[0];
-		free(copy);
-		return (true);
-	}
-	free(copy);
-	return (false);
+	return (0);
 }

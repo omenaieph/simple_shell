@@ -1,34 +1,34 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
  * splitString - splits string into an array of strings
  * separated by spaces
- * @build: input build
- * Return: true if able to split, false if not
+ * @init: input init
+ * Return: 1 if able to split, 0 if not
  */
-_Bool splitString(config *build)
+int splitString(shellMaker *init)
 {
 	register unsigned int i = 0;
 	char *tok, *cpy;
 
-	if (countWords(build->buffer) == 0)
+	if (countWords(init->buffer) == 0)
 	{
-		build->args = NULL;
-		free(build->buffer);
-		return (false);
+		init->args = NULL;
+		free(init->buffer);
+		return (0);
 	}
-	build->args = malloc((countWords(build->buffer) + 1) * sizeof(char *));
-	cpy = _strdup(build->buffer);
+	init->args = malloc((countWords(init->buffer) + 1) * sizeof(char *));
+	cpy = _strdup(init->buffer);
 	tok = _strtok(cpy, " ");
 	while (tok)
 	{
-		build->args[i] = _strdup(tok);
+		init->args[i] = _strdup(tok);
 		tok = _strtok(NULL, " ");
 		i++;
 	}
-	build->args[i] = NULL;
+	init->args[i] = NULL;
 	free(cpy);
-	return (true);
+	return (1);
 }
 
 /**
@@ -39,15 +39,15 @@ _Bool splitString(config *build)
 unsigned int countWords(char *str)
 {
 	register int words = 0;
-	_Bool wordOn = false;
+	int wordOn = 0;
 
 	while (*str)
 	{
 		if (isSpace(*str) && wordOn)
-			wordOn = false;
+			wordOn = 0;
 		else if (!isSpace(*str) && !wordOn)
 		{
-			wordOn = true;
+			wordOn = 1;
 			words++;
 		}
 		str++;
@@ -58,9 +58,15 @@ unsigned int countWords(char *str)
 /**
  * isSpace - determines if char is a space
  * @c: input char
- * Return: true or false
+ * Return: 1 or 0
  */
-_Bool isSpace(char c)
+int isSpace(char c)
 {
-	return (c == ' ');
+	int ret = 0;
+
+	if (c == ' ')
+	{
+		ret = 1;
+	}
+	return (ret);
 }

@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
  * searchNode - searches linked list for string and
@@ -7,10 +7,10 @@
  * @str: input string
  * Return: index of node with matching string
  */
-int searchNode(linked_l *head, char *str)
+int searchNode(l_list *head, char *str)
 {
 	register int len = 0, index = 0, i;
-	linked_l *current;
+	l_list *current;
 	char *tmp, *ptr;
 
 	current = head;
@@ -35,15 +35,15 @@ int searchNode(linked_l *head, char *str)
 }
 
 /**
- * generateLinkedList - generates a linked list of environ
+ * convertToLL - generates a linked list of environ
  * variables
  * @array: input array of strings
  * Return: head of linked list
  */
-linked_l *generateLinkedList(char **array)
+l_list *convertToLL(char **array)
 {
 	register int i = 0;
-	linked_l *head;
+	l_list *head;
 
 	head = NULL;
 	while (array[i])
@@ -61,16 +61,16 @@ linked_l *generateLinkedList(char **array)
  * @str: string to add
  * Return: address of node added
  */
-linked_l *addNodeAtIndex(linked_l **head, int index, char *str)
+l_list *addNodeAtIndex(l_list **head, int index, char *str)
 {
 	register int i = 0;
-	linked_l *newNode, *current;
+	l_list *newNode, *current;
 	char *newStr;
 
 	current = *head;
 	if (!str)
 		return (NULL);
-	newNode  = malloc(sizeof(linked_l));
+	newNode  = malloc(sizeof(l_list));
 	if (!newNode)
 	{
 		perror("Malloc failed\n");
@@ -108,10 +108,10 @@ linked_l *addNodeAtIndex(linked_l **head, int index, char *str)
  * @index: index of value to be returned
  * Return: address of node at input index
  */
-char *getNodeAtIndex(linked_l *head, unsigned int index)
+char *getNodeAtIndex(l_list *head, unsigned int index)
 {
 	register uint count = 0;
-	linked_l *current;
+	l_list *current;
 	char *ptr;
 
 	current = head;

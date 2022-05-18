@@ -1,19 +1,19 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * addNode - adds a new node at the beginning of a linked_l list
+ * addNode - adds a new node at the beginning of a l_list list
  * @head: reference to head of linked list
  * @str: string to be added on new node
  * Return: address of new head;
  */
-linked_l *addNode(linked_l **head, char *str)
+l_list *addNode(l_list **head, char *str)
 {
-	linked_l *newNode;
+	l_list *newNode;
 	char *newStr;
 
 	if (!str)
 		return (NULL);
-	newNode = malloc(sizeof(linked_l));
+	newNode = malloc(sizeof(l_list));
 	if (!newNode)
 	{
 		perror("Malloc failed\n");
@@ -32,20 +32,20 @@ linked_l *addNode(linked_l **head, char *str)
 }
 
 /**
- * addNodeEnd - adds a new node at the end of a linked_l list;
+ * addNodeEnd - adds a new node at the end of a l_list list;
  * @head: reference to head of list
  * @str: string to be added to linked list
  * Return: address of new node
  */
-linked_l *addNodeEnd(linked_l **head, char *str)
+l_list *addNodeEnd(l_list **head, char *str)
 {
-	linked_l *newNode;
-	linked_l *last = *head;
+	l_list *newNode;
+	l_list *last = *head;
 	char *newStr;
 
 	if (!str)
 		return (NULL);
-	newNode = malloc(sizeof(linked_l));
+	newNode = malloc(sizeof(l_list));
 	if (!newNode)
 	{
 		perror("Malloc failed\n");
@@ -72,11 +72,11 @@ linked_l *addNodeEnd(linked_l **head, char *str)
 }
 
 /**
- * printList - prints all elements of a linked_l list
+ * printList - prints all elements of a l_list list
  * @h: pointer to head of list
  * Return: number of elements
  */
-size_t printList(const linked_l *h)
+size_t printList(const l_list *h)
 {
 	register int count = 0;
 
@@ -93,15 +93,15 @@ size_t printList(const linked_l *h)
 
 /**
  * deleteNodeAtIndex - deletes the node at index
- * index of a linked_l linked list
+ * index of a l_list linked list
  * @head: double pointer to head of list
  * @index: index of node to be deleted
  * Return: 1 if success, -1 if fail
  */
-int deleteNodeAtIndex(linked_l **head, unsigned int index)
+int deleteNodeAtIndex(l_list **head, unsigned int index)
 {
-	linked_l *current;
-	linked_l *next;
+	l_list *current;
+	l_list *next;
 
 	register uint i;
 
@@ -126,11 +126,11 @@ int deleteNodeAtIndex(linked_l **head, unsigned int index)
 }
 
 /**
- * list_len - returns the number of elements in a linked list
+ * l_list_len - returns the number of elements in a linked list
  * @h: head of linked list
  * Return: number of elements in list_t
  */
-size_t list_len(linked_l *h)
+size_t l_list_len(l_list *h)
 {
 	register unsigned int count = 0;
 

@@ -1,11 +1,11 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * insertNullByte - inserts null byte at given index
+ * putNullByte - inserts null byte at given index
  * @str: input string
  * @index: index to insert null byte
  */
-void insertNullByte(char *str, unsigned int index)
+void putNullByte(char *str, unsigned int index)
 {
 	str[index] = '\0';
 }

@@ -1,37 +1,37 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * freeMembers - frees build config members
- * @build: input build
+ * freeMem - frees init shellMaker members
+ * @init: input init
  */
-void freeMembers(config *build)
+void freeMem(shellMaker *init)
 {
-	if (build->env)
-		freeList(build->env);
-	if (build->args)
-		freeArgs(build->args);
-	if (build->buffer)
-		free(build->buffer);
+	if (init->env)
+		freeList(init->env);
+	if (init->args)
+		freeArgs(init->args);
+	if (init->buffer)
+		free(init->buffer);
 }
 
 /**
  * freeArgsAndBuffer - frees args and buffer
- * @build: input build
+ * @init: input init
  */
-void freeArgsAndBuffer(config *build)
+void freeArgsAndBuffer(shellMaker *init)
 {
-	freeArgs(build->args);
-	free(build->buffer);
+	freeArgs(init->args);
+	free(init->buffer);
 }
 
 /**
  * freeList - frees a linked list
  * @head: double pointer to head of list
  */
-void freeList(linked_l *head)
+void freeList(l_list *head)
 {
-	linked_l *current;
-	linked_l *tmp;
+	l_list *current;
+	l_list *tmp;
 
 	if (!head)
 		return;

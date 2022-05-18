@@ -1,34 +1,34 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
  * errorHandler - prints error message for shell
- * @build: the build config
+ * @init: the init shellMaker
  */
-void errorHandler(config *build)
+void errorHandler(shellMaker *init)
 {
 	register int len;
 	static char error[BUFSIZE];
 	char *ptr, *alpha;
 
-	alpha = itoa(build->lineCounter);
-	_strcat(error, build->shellName);
+	alpha = itoa(init->lineCounter);
+	_strcat(error, init->shellName);
 	_strcat(error, ": ");
 	_strcat(error, alpha);
 	_strcat(error, ": ");
-	_strcat(error, build->args[0]);
+	_strcat(error, init->args[0]);
 	_strcat(error, getErrorMessage());
-	if (build->args[1])
+	if (init->args[1])
 	{
 		if (errno != EBADCD)
 			_strcat(error, ": ");
-		_strcat(error, build->args[1]);
+		_strcat(error, init->args[1]);
 	}
 	_strcat(error, "\n");
 	ptr = _strchr(error, '\n');
 	len = ptr - error;
 	write(STDERR_FILENO, error, len + 1);
 	free(alpha);
-	insertNullByte(error, 0);
+	putNullByte(error, 0);
 }
 
 /**
@@ -102,7 +102,7 @@ char *itoa(unsigned int num)
 		perror("Malloc: failed\n");
 		exit(errno);
 	}
-	insertNullByte(str, digits);
+	putNullByte(str, digits);
 	while (num > 0)
 	{
 		str[digits - 1] = num % 10 + '0';

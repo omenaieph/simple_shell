@@ -1,6 +1,8 @@
-C - Simple Shell
+# Simple shell
 
-An ALX Team project 
-	TEAM
-1. Ephraim Omenai
-2. Peter Atteh
+## Description
+
+a simple UNIX command interpreter that replicates functionalities of the simple shell
+# Project
+
+Team project with Ephraim Omenai and Peter Atteh
